@@ -1,6 +1,7 @@
 ![Pygame](https://www.pygame.org/docs/_images/pygame_logo.png)
 
-# Button Class
+# TRULY CENTERED BUTTON CLASS
+**Sick and tired of Pygame's uncentered text on your buttons? Look no further!**
 
 ## Required parameters
 - **screen**: `pygame.Surface`
