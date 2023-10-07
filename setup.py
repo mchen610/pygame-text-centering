@@ -10,5 +10,7 @@ setup(
     author='Melvin Chen',
     author_email='melvinchen610@gmail.com',
     description='A Pygame button library that fixes text-centering',
-    url='https://github.com/mchen610/sudoku-clone',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/mchen610/pygame-truly-centered-button',
 )
