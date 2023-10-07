@@ -1,3 +1,24 @@
+![Pygame](https://www.pygame.org/docs/_images/pygame_logo.png)
+
 # Button Class
 
-- Attributes: screen: pygame.Surface, text: str, COLOR: tuple, center: tuple, dim: tuple, thickness = 1, radius = -1, font_size = 0
+## Required parameters
+- **screen**: `pygame.Surface`
+- **text**: `str`
+- **COLOR**: `tuple` `(r, g, b)`
+- **center**: `tuple` `(x, y)`
+- **dim**: `tuple` `(w, h)`
+
+## Optional parameters
+- **thickness**: `int` `(default = 1)`
+- **radius**: `int` `(default = -1)`
+- **font_size**: `int` `(default = w*0.9)`
+
+## Additional Attributes
+- **real_rect**: Actual surrounding border seen on screen
+- **font_rect**: Invisible border that wraps the text
+- **screen_color**: Screen color behind the button
+
+## Methods
+- **is_hovered()**: Checks if button is hovered (does not update visual state)
+- **check_clicked()**: Updates visual state of button based on user mouse event
