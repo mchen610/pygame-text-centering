@@ -3,6 +3,8 @@
 # TRULY CENTERED BUTTON CLASS
 **Sick and tired of Pygame's uncentered text on your buttons? Look no further!**
 
+`my_button = Button(params)`
+
 ## Required parameters
 - **screen**: `pygame.Surface`
 - **text**: `str`
