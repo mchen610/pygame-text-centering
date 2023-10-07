@@ -1,7 +1,6 @@
 import pygame
 import json
-from os import path
-from .colors import *
+from colors import *
 
 if __name__ == '__main__':
     clock = pygame.time.Clock()

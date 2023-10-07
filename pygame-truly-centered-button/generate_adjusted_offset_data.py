@@ -1,6 +1,5 @@
 import pygame
 import json
-from os import path
 from colors import *
 from offset_linear_regression import params
 
