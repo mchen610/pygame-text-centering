@@ -1,5 +1,4 @@
 import pygame
-import random
 from colors import *
 from offset_linear_regression import params
 
