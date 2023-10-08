@@ -1,11 +1,10 @@
 import pygame
 import json
-from colors import *
-from offset_linear_regression import params
+from pgcenteredbutton.colors import *
+from pgcenteredbutton.offset_linear_regression import params
 
-if __name__ == '__main__':
+def generate_adjusted_offset_data():
     clock = pygame.time.Clock()
-
 
     pygame.init()
     dim = (1000,600)
@@ -74,19 +73,12 @@ if __name__ == '__main__':
         font_list.append(font_size)
         offset_list.append(offset)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-
         pygame.display.update()
 
     with open("offset_data_adjusted.json", "w") as file:
         json.dump({'font_size_list': font_list, 'offset_list': offset_list}, file)
 
-    while True:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    exit()
+    pygame.quit()
+    exit()
+                    
 

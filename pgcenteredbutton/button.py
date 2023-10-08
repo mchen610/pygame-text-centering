@@ -1,6 +1,6 @@
 import pygame
-from colors import *
-from offset_linear_regression import params
+from pgcenteredbutton.colors import *
+from pgcenteredbutton.offset_linear_regression import params
 
 def left_click(event: pygame.event.Event):
     return event.type == pygame.MOUSEBUTTONDOWN and event.button == 1

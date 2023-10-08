@@ -1,8 +1,8 @@
 import pygame
 import json
-from colors import *
+from pgcenteredbutton.colors import *
 
-if __name__ == '__main__':
+def generate_offset_data():
     clock = pygame.time.Clock()
 
 
@@ -21,7 +21,6 @@ if __name__ == '__main__':
     for font_size in range(5,800):
         
         screen.fill(BLACK)
-        
         
         font = pygame.font.Font(None, font_size)
         render = font.render('B', True, COLOR)
@@ -71,19 +70,11 @@ if __name__ == '__main__':
         font_list.append(font_size)
         offset_list.append(offset)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-
         pygame.display.update()
 
     with open("offset_data.json", "w") as file:
         json.dump({'font_size_list': font_list, 'offset_list': offset_list}, file)
 
-    while True:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    exit()
+    pygame.quit()
+    exit()
 

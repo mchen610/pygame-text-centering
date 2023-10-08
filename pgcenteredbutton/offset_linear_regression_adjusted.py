@@ -1,12 +1,19 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from pgcenteredbutton.generate_adjusted_offset_data import generate_adjusted_offset_data
 import json
 
-try:
-    with open("offset_data_adjusted.json", "r") as file:
-        dict = json.load(file)
-        x_data = dict['font_size_list']
-        y_data = dict['offset_list']
+def generate_adjusted_linear_regression():
+    try:
+        with open("offset_data_adjusted.json", "r") as file:
+            dict = json.load(file)
+    except:
+        generate_adjusted_offset_data()
+        with open("offset_data_adjusted.json", "r") as file:
+            dict = json.load(file)
+            
+    x_data = dict['font_size_list']
+    y_data = dict['offset_list']
 
     x_data = np.array(x_data)
     y_data = np.array(y_data)
@@ -34,5 +41,3 @@ try:
 
     with open('data_analysis.json', 'w') as file:
         json.dump(data, file, indent=4)
-except:
-    print("Data does not exist!")
