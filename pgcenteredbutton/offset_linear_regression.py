@@ -47,5 +47,3 @@ data['unadjusted_data'] = params
 
 with open('data_analysis.json', 'w') as file:
     json.dump(data, file, indent=4)
-
-generate_adjusted_offset_data()
