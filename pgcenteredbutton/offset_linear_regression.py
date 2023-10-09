@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from pgcenteredbutton.generate_offset_data import generate_offset_data
-from pgcenteredbutton.generate_adjusted_offset_data import generate_adjusted_offset_data
 import json
 
 
