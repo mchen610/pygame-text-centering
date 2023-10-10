@@ -15,7 +15,7 @@ if __name__ == "__main__":
     
     good_button_center = (screen_dim[0]//4, screen_dim[1]//2)
     good_button = Button(
-        screen = screen, 
+        screen = screen,
         text = 'GOOD', 
         color = button_color, 
         center = good_button_center, 
