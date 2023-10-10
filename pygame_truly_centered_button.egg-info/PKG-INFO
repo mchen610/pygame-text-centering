@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pygame-truly-centered-button
-Version: 2.4
+Version: 2.5
 Summary: A Pygame library of a button class with properly-centered text!
 Home-page: https://github.com/mchen610/pygame-truly-centered-button
 Author: Melvin Chen

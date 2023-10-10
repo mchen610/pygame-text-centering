@@ -19,11 +19,8 @@ $newContent | Set-Content -Path .\setup.py
 
 Invoke-Expression "python setup.py sdist"
 Invoke-Expression "git add ."   
-Invoke-Expression "git commit -m $m"
+Invoke-Expression "git commit -m '$m'"
 Invoke-Expression "git push"
 Invoke-Expression "twine upload dist/*"
-
-Set-Location '..'
-
 
 # Execute setup.py
