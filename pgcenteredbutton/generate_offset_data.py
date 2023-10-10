@@ -1,30 +1,29 @@
 import pygame
-import json
-from pgcenteredbutton.colors import *
+import os
 
-def generate_offset_data():
-    clock = pygame.time.Clock()
-
-
+def generate_offset_data(params = None):
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "0,-1000"
     pygame.init()
-    dim = (1000,600)
-    screen = pygame.display.set_mode((dim[0],dim[1]))
-    screen.fill((BLACK))
+    dim = (1000, 600)
+    screen = pygame.display.set_mode((dim[0], dim[1]))
+    screen.fill((0, 0, 0))
 
-    real_rect = pygame.rect.Rect((0,0), dim)
+    real_rect = pygame.rect.Rect((0 , 0), dim)
     real_rect.center = screen.get_rect().center
 
-    COLOR = GREEN
+    COLOR = (255, 255, 255)
 
     font_list = []
     offset_list = []
-    for font_size in range(5,800):
+    for font_size in range(5, 800, 2):
         
-        screen.fill(BLACK)
+        screen.fill((0, 0, 0))
         
         font = pygame.font.Font(None, font_size)
-        render = font.render('B', True, COLOR)
+        render = font.render('T', True, COLOR)
         font_rect = render.get_rect(center = real_rect.center)
+        if params:
+            font_rect.centery = font_rect.centery+font_size*params['coef']+params['intercept']
         screen.blit(render, font_rect)
         pygame.draw.rect(screen, COLOR, real_rect, 1)
 
@@ -57,7 +56,6 @@ def generate_offset_data():
                 #offset -> move down the difference in pixels between text center and rectangle center for each font_size
                 if color > 0:
                     text_bot = y
-
                     break
             
             i = i+1
@@ -72,9 +70,10 @@ def generate_offset_data():
 
         pygame.display.update()
 
-    with open("offset_data.json", "w") as file:
-        json.dump({'font_size_list': font_list, 'offset_list': offset_list}, file)
-
     pygame.quit()
-    exit()
+
+    data = {'font_size_list': font_list, 'offset_list': offset_list}
+    del os.environ['SDL_VIDEO_WINDOW_POS']
+    return data
+    
 

@@ -2,11 +2,8 @@ README.md
 setup.py
 pgcenteredbutton/__init__.py
 pgcenteredbutton/button.py
-pgcenteredbutton/colors.py
-pgcenteredbutton/generate_adjusted_offset_data.py
 pgcenteredbutton/generate_offset_data.py
 pgcenteredbutton/offset_linear_regression.py
-pgcenteredbutton/offset_linear_regression_adjusted.py
 pygame_truly_centered_button.egg-info/PKG-INFO
 pygame_truly_centered_button.egg-info/SOURCES.txt
 pygame_truly_centered_button.egg-info/dependency_links.txt

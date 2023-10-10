@@ -4,45 +4,57 @@ from pgcenteredbutton.generate_offset_data import generate_offset_data
 import json
 
 
-try:
-    with open("offset_data.json", "r") as file:
-        dict = json.load(file)
-except:
-    generate_offset_data()
-    with open("offset_data.json", "r") as file:
-        dict = json.load(file)
+def generate_linear_regression(params = None):
+    if not params:
+        try:
+            with open("pgcenteredbutton/offset_data_unadjusted.json", "r") as file:
+                dict = json.load(file)
+        except:
+            dict = generate_offset_data()
+            with open("pgcenteredbutton/offset_data_unadjusted.json", "w") as file:
+                json.dump(dict, file, indent=4)
 
-x_data = dict['font_size_list']
-y_data = dict['offset_list']
-
-# Given data
-x_data = np.array(x_data)  # Continue with all x values
-y_data = np.array(y_data)  # Continue with all y values
-
-# Reshape the data for scikit-learn
-x_data = x_data.reshape(-1, 1)
-y_data = y_data.reshape(-1, 1)
-
-# Create and train the linear regression model
-model = LinearRegression()
-model.fit(x_data, y_data)
+    else:
+        try:
+            with open("pgcenteredbutton/offset_data_adjusted.json", "r") as file:
+                dict = json.load(file)
+        except:
+            dict = generate_offset_data(params)
+            with open("pgcenteredbutton/offset_data_adjusted.json", "w") as file:
+                json.dump(dict, file, indent=4)
 
 
-# Calculate the absolute percentage error for each data point
-ape = np.abs(y_data / x_data) * 100
+    x_data = dict['font_size_list']
+    y_data = dict['offset_list']
 
-# Calculate MAPE
-mape = np.mean(ape)
+    x_data = np.array(x_data)  
+    y_data = np.array(y_data)
 
-params = {'coef': float(model.coef_[0][0]), 'intercept': float(model.intercept_[0]), 'MAPE': mape}
+    #{a, b} -> {[a], [b]}
+    x_data = x_data.reshape(-1, 1)
+    y_data = y_data.reshape(-1, 1)
 
-try:
-    with open('data_analysis.json', 'r') as file:
-        data = json.load(file)
-except:
-    data = {}
+    model = LinearRegression()
+    model.fit(x_data, y_data)
 
+    # Percent error = offset / font size
+    percent_error = np.abs(y_data / x_data) * 100
+
+    # Mean percent error
+    mape = np.mean(percent_error)
+    coef = float(model.coef_[0][0])
+    intercept = float(model.intercept_[0])
+    params = {'coef': round(coef, 4), 'intercept': round(intercept, 4), 'MAPE': round(mape, 4)}
+    return params
+
+
+data = {'x': 'font size', 'y': 'offset'}
+params = generate_linear_regression()
 data['unadjusted_data'] = params
+data['adjusted_data'] = generate_linear_regression(data['unadjusted_data'])
 
-with open('data_analysis.json', 'w') as file:
+offset_reduction = (data['unadjusted_data']['MAPE'] - data['adjusted_data']['MAPE']) / data['unadjusted_data']['MAPE']
+data['offset_reduction'] = f"{round(offset_reduction, 2)*100}%"
+
+with open('pgcenteredbutton/offset_data_results.json', 'w') as file:
     json.dump(data, file, indent=4)
