@@ -28,9 +28,9 @@ Requires-Dist: scikit-learn
 - **dim**: `tuple` `(w, h)`
 
 ## Optional parameters
-- **thickness**: `int` `(default = 1)`
-- **radius**: `int` `(default = -1)`
-- **font_size**: `int` `(default = w*0.9)`
+- **thickness**: `int`
+- **radius**: `int`
+- **font_size**: `int`
 
 ## Additional Attributes
 - **real_rect**: Actual surrounding border seen on screen

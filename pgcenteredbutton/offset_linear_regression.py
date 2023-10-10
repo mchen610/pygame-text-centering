@@ -1,26 +1,31 @@
+import pkg_resources
+import json
+
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from pgcenteredbutton.generate_offset_data import generate_offset_data
-import json
+
 
 
 def generate_linear_regression(params = None):
     if not params:
+        file_path = pkg_resources.resource_filename('pgcenteredbutton', 'offset_data_unadjusted.json')
         try:
-            with open("pgcenteredbutton/offset_data_unadjusted.json", "r") as file:
+            with open(file_path, "r") as file:
                 dict = json.load(file)
         except:
             dict = generate_offset_data()
-            with open("pgcenteredbutton/offset_data_unadjusted.json", "w") as file:
+            with open(file_path, "w") as file:
                 json.dump(dict, file, indent=4)
 
     else:
+        file_path = pkg_resources.resource_filename('pgcenteredbutton', 'offset_data_adjusted.json')
         try:
-            with open("pgcenteredbutton/offset_data_adjusted.json", "r") as file:
+            with open(file_path, "r") as file:
                 dict = json.load(file)
         except:
             dict = generate_offset_data(params)
-            with open("pgcenteredbutton/offset_data_adjusted.json", "w") as file:
+            with open(file_path, "w") as file:
                 json.dump(dict, file, indent=4)
 
 
@@ -54,7 +59,8 @@ data['unadjusted_data'] = params
 data['adjusted_data'] = generate_linear_regression(data['unadjusted_data'])
 
 offset_reduction = (data['unadjusted_data']['MAPE'] - data['adjusted_data']['MAPE']) / data['unadjusted_data']['MAPE']
-data['offset_reduction'] = f"{round(offset_reduction, 4)*100}%"
+data['offset_reduction'] = f"{round(offset_reduction, 2)*100}%"
 
-with open('pgcenteredbutton/offset_data_results.json', 'w') as file:
+file_path = pkg_resources.resource_filename('pgcenteredbutton', 'offset_data_results.json')
+with open(file_path, 'w') as file:
     json.dump(data, file, indent=4)
