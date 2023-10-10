@@ -54,7 +54,7 @@ data['unadjusted_data'] = params
 data['adjusted_data'] = generate_linear_regression(data['unadjusted_data'])
 
 offset_reduction = (data['unadjusted_data']['MAPE'] - data['adjusted_data']['MAPE']) / data['unadjusted_data']['MAPE']
-data['offset_reduction'] = f"{round(offset_reduction, 2)*100}%"
+data['offset_reduction'] = f"{round(offset_reduction, 4)*100}%"
 
 with open('pgcenteredbutton/offset_data_results.json', 'w') as file:
     json.dump(data, file, indent=4)
