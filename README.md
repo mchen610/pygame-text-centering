@@ -30,12 +30,12 @@
 - **is_clicked()**: Updates visual state of button and returns whether the button was just clicked
 
 ## Quickstart
-### shell
+### Shell
 ```
 pip install pygame-truly-centered-button
 ```
 
-### python
+### Python
 ```
 #example.py
 
