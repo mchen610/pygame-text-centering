@@ -28,9 +28,6 @@ class Button:
         self.was_hovered = False
         self.clicked = False
 
-    def __draw_text(self):
-        self.screen.blit(self.render, self.font_rect)
-
     def __draw_border(self, extra = 0, color = None):
         color = color or self.color
         pygame.draw.rect(self.screen, color, self.real_rect, self.thickness + extra, self.radius)
@@ -48,7 +45,7 @@ class Button:
     def __handle_click_down(self):
         brighter_color = tuple([value+(255-value)*0.2 for value in self.screen_color.normalize()[:3]])
         self.__draw_border(-self.thickness, brighter_color)
-        self.__draw_text()
+        self.draw_text()
         self.__draw_hovered()
 
     def __handle_click_up(self):
@@ -59,8 +56,11 @@ class Button:
 
     #Public methods
 
+    def draw_text(self):
+        self.screen.blit(self.render, self.font_rect)
+        
     def draw(self):
-        self.__draw_text()
+        self.draw_text()
         self.__draw_border()
 
     def is_hovered(self):

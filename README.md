@@ -25,6 +25,7 @@
 
 ## Methods
 - **draw()**: Draws the button (recommended to run immediately after instantiation)
+- **draw_text()**: Draws only the text without the bordering rectangle
 - **is_hovered()**: Checks if button is hovered (does not update visual state)
 - **is_clicked()**: Updates visual state of button and returns whether the button was just clicked
 
