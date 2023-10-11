@@ -83,7 +83,12 @@ class Button:
                 elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                     self.__handle_click_up()
                     pygame.display.update()
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                     return True
+                
+                else:
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
 
             else:
                 self.was_hovered = False

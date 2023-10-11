@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pygame-truly-centered-button',
-    version='2.9',
+    version='2.10',
     packages=find_packages(),
     install_requires=[
         'pygame', 'numpy', 'joblib', 'scipy', 'threadpoolctl', 'scikit-learn'
