@@ -1,1 +1,1 @@
-from pgcenteredbutton.button import Button, BadButton
+from pgcenteredbutton.button import Button, BadButton, Text, TextButton
