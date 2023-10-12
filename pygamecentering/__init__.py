@@ -1,1 +1,1 @@
-from pgcenteredbutton.centering import Button, BadButton, Text, TextButton
+from pygamecentering.centering import Button, BadButton, Text, TextButton

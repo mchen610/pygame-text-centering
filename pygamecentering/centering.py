@@ -1,5 +1,5 @@
 import pygame
-from pgcenteredbutton.offset_linear_regression import params
+from pygamecentering.offset_linear_regression import params
 
 class Text:
     def __init__(self, screen: pygame.Surface, text: str, color: tuple, center: tuple, font_size: int):
