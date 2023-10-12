@@ -1,6 +1,9 @@
 import pygame
 from pygamecentering.offset_linear_regression import params
 
+def adjust_font_rect(font_rect: pygame.rect.Rect, font_size: int):
+    font_rect.centery = round(font_rect.centery+font_size*params['coef']+params['intercept']) #adjust text to center
+
 class Text:
     def __init__(self, screen: pygame.Surface, text: str, color: tuple, center: tuple, font_size: int):
         self.screen = screen
@@ -11,7 +14,8 @@ class Text:
         self.font = pygame.font.Font(None, self.font_size)
         self.render = self.font.render(text, True, color)
         self.font_rect = self.render.get_rect(center=center)
-        self.font_rect.centery = self.font_rect.centery+self.font_size*params['coef']+params['intercept']
+        adjust_font_rect(self.font_rect, self.font_size) #adjust text to center
+
 
     def draw(self):
         self.screen.blit(self.render, self.font_rect)
@@ -108,7 +112,7 @@ class Button():
             self.font_rect = self.render.get_rect(center=center)
 
         if adjusted:
-            self.font_rect.centery = self.font_rect.centery+self.font_size*params['coef']+params['intercept'] #adjust text to center
+            adjust_font_rect(self.font_rect, self.font_size) #adjust text to center
 
         self.was_hovered = False
         self.clicked = False
@@ -185,7 +189,8 @@ class Button():
         self.real_rect.center = center
         self.font_rect.center = center
         if self.adjusted:
-            self.font_rect.centery = self.font_rect.centery+self.font_size*params['coef']+params['intercept'] #adjust text to center
+            adjust_font_rect(self.font_rect, self.font_size) #adjust text to center
+
 
 
 class BadButton(Button):

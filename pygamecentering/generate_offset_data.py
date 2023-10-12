@@ -15,7 +15,7 @@ def generate_offset_data(params = None):
 
     font_list = []
     offset_list = []
-    for font_size in range(5, 800, 2):
+    for font_size in range(5, 800):
         
         screen.fill((0, 0, 0))
         

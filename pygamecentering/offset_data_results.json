@@ -2,14 +2,14 @@
     "x": "font size",
     "y": "offset",
     "unadjusted_data": {
-        "coef": 0.0445,
-        "intercept": -0.506,
-        "MAPE": 4.1302
+        "coef": 0.0444,
+        "intercept": -0.468,
+        "MAPE": 4.1498
     },
     "adjusted_data": {
-        "coef": -0.0,
-        "intercept": 0.0006,
-        "MAPE": 0.1546
+        "coef": 0.0,
+        "intercept": 0.001,
+        "MAPE": 0.1575
     },
     "offset_reduction": "96.0%"
 }
