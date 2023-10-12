@@ -180,6 +180,15 @@ class Button():
         return self.real_rect.collidepoint(pygame.mouse.get_pos())
 
     def is_clicked(self):
+
+        if self.was_hovered is False and self.is_hovered() is True:
+            self.was_hovered = True
+            self.__draw_hovered()
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+        elif self.was_hovered is True and self.is_hovered() is False and self.button_down is False:
+            self.__handle_unhovered()
+
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered():
                 self.__handle_click_down()
@@ -194,15 +203,10 @@ class Button():
             
             elif event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
+                exit()            
 
-        if self.was_hovered is False and self.is_hovered() is True:
-            self.was_hovered = True
-            self.__draw_hovered()
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-
-        elif self.was_hovered is True and self.is_hovered() is False and self.button_down is False:
-            self.__handle_unhovered()
+            else:
+                pygame.event.post(event)
 
         pygame.display.update()
         return False
