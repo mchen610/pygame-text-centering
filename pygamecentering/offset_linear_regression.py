@@ -9,7 +9,7 @@ from pygamecentering.generate_offset_data import generate_offset_data
 
 def generate_linear_regression(params = None):
     if not params:
-        file_path = pkg_resources.resource_filename('pgcenteredbutton', 'offset_data_unadjusted.json')
+        file_path = pkg_resources.resource_filename('pygamecentering', 'offset_data_unadjusted.json')
         try:
             with open(file_path, "r") as file:
                 dict = json.load(file)
@@ -19,7 +19,7 @@ def generate_linear_regression(params = None):
                 json.dump(dict, file, indent=4)
 
     else:
-        file_path = pkg_resources.resource_filename('pgcenteredbutton', 'offset_data_adjusted.json')
+        file_path = pkg_resources.resource_filename('pygamecentering', 'offset_data_adjusted.json')
         try:
             with open(file_path, "r") as file:
                 dict = json.load(file)
@@ -61,6 +61,6 @@ data['adjusted_data'] = generate_linear_regression(data['unadjusted_data'])
 offset_reduction = (data['unadjusted_data']['MAPE'] - data['adjusted_data']['MAPE']) / data['unadjusted_data']['MAPE']
 data['offset_reduction'] = f"{round(offset_reduction, 2)*100}%"
 
-file_path = pkg_resources.resource_filename('pgcenteredbutton', 'offset_data_results.json')
+file_path = pkg_resources.resource_filename('pygamecentering', 'offset_data_results.json')
 with open(file_path, 'w') as file:
     json.dump(data, file, indent=4)
