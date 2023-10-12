@@ -12,13 +12,13 @@ class Text:
         self.color = color
         self.font_size = font_size
         self.font = pygame.font.Font(None, self.font_size)
-        self.render = self.font.render(text, True, color)
-        self.font_rect = self.render.get_rect(center=center)
+        self.text_render = self.font.render(text, True, color)
+        self.font_rect = self.text_render.get_rect(center=center)
         adjust_font_rect(self.font_rect, self.font_size) #adjust text to center
 
 
     def draw(self):
-        self.screen.blit(self.render, self.font_rect)
+        self.screen.blit(self.text_render, self.font_rect)
 
 class TextButton(Text):
     def __init__(self, screen: pygame.Surface, text: str, color: tuple, center: tuple, font_size: int):
@@ -50,18 +50,24 @@ class TextButton(Text):
         self.clicked = True
         self.was_hovered = False
         self.button_down = False
-        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
         self.erase_button()
-        self.draw()
+        self.__draw_hovered()
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+
+    def __handle_hovered(self):
+        self.was_hovered = True
+        self.__draw_hovered()
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
     def __handle_unhovered(self):
         self.was_hovered = False
         self.button_down = False
-
         self.erase_button()
         self.draw()
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-        
+
+
     #Public methods
 
     def erase_button(self):
@@ -73,31 +79,25 @@ class TextButton(Text):
         return self.font_rect.collidepoint(pygame.mouse.get_pos())
 
     def is_clicked(self):
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered():
-                self.__handle_click_down()
-                    
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.button_down:
-                if self.is_hovered():
+        while self.is_hovered():
+            if self.was_hovered is False:
+                self.__handle_hovered()
+                pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    self.__handle_click_down()
+                    pygame.display.update()
+
+                elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.button_down:
                     self.__handle_click_up()
                     pygame.display.update()
                     return True
-                else:
-                    self.__handle_unhovered()
-            
-            elif event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-
-        if self.was_hovered is False and self.is_hovered() is True:
-            self.was_hovered = True
-            self.__draw_hovered()
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-
-        elif self.was_hovered is True and self.is_hovered() is False and self.button_down is False:
+                
+        if self.was_hovered:
             self.__handle_unhovered()
+            pygame.display.update()
 
-        pygame.display.update()
         return False
 
 class Button():
@@ -106,7 +106,7 @@ class Button():
         self.screen_color = screen.get_at(center)
         self.color = color
         self.font_size = int(dim[1]/.9) 
-        self.render = pygame.font.Font(None, self.font_size).render(text, True, color)
+        self.text_render = pygame.font.Font(None, self.font_size).render(text, True, color)
         self.radius = radius
         self.thickness = thickness
         self.dim = dim #(w, h)
@@ -114,12 +114,12 @@ class Button():
 
         self.real_rect = pygame.Rect(0, 0, dim[0], dim[1]) #(left, top, width, height)
         self.real_rect.center = center
-        self.font_rect = self.render.get_rect(center=center)
+        self.font_rect = self.text_render.get_rect(center=center)
         while self.font_rect.w > dim[0] or self.font_rect.h > dim[1]:
             self.font_size -= 1
             font = pygame.font.Font(None, self.font_size)
-            self.render = font.render(text, True, color)
-            self.font_rect = self.render.get_rect(center=center)
+            self.text_render = font.render(text, True, color)
+            self.font_rect = self.text_render.get_rect(center=center)
 
         if adjusted:
             adjust_font_rect(self.font_rect, self.font_size) #adjust text to center
@@ -129,18 +129,17 @@ class Button():
         self.clicked = False
         
     def __draw_text(self):
-        self.screen.blit(self.render, self.font_rect)
+        self.screen.blit(self.text_render, self.font_rect)
 
-    def __draw_border(self, extra = 0, color = None):
-        color = color or self.color
-        pygame.draw.rect(self.screen, color, self.real_rect, self.thickness + extra, self.radius)
+    def __draw_border(self):
+        pygame.draw.rect(self.screen, self.color, self.real_rect, self.thickness, self.radius)
 
-    def __draw_hovered(self, color = (255, 255, 255)):
-        self.__draw_border(3, color)
+    def __draw_hovered(self):
+        pygame.draw.rect(self.screen, pygame.colordict['azure'], self.real_rect, self.thickness + 3, self.radius)
 
     def __draw_brightened(self):
-        brighter_color = tuple([value+(255-value)*0.2 for value in self.screen_color.normalize()[:3]])
-        self.__draw_border(-self.thickness, brighter_color)
+        brighter_color = tuple([min(255, int(value*1.2)) for value in self.screen_color.normalize()[:3]])
+        pygame.draw.rect(self.screen, brighter_color, self.real_rect, 0, self.radius)
         self.__draw_hovered()
         self.__draw_text()
 
@@ -152,28 +151,24 @@ class Button():
         self.clicked = True
         self.was_hovered = False
         self.button_down = False
-        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
         self.erase_button()
         self.draw()
-        
         self.__draw_hovered()
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
 
     def __handle_hovered(self):
-        print('hi')
         self.was_hovered = True
+        self.__draw_hovered()
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
-        self.__draw_hovered()
-
-
     def __handle_unhovered(self):
-        print(':()')
         self.was_hovered = False
         self.button_down = False
-        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-
         self.erase_button()
         self.draw()
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
                 
 
     #Public methods
@@ -203,7 +198,7 @@ class Button():
                     self.__handle_click_up()
                     pygame.display.update()
                     return True
-
+                
         if self.was_hovered:
             self.__handle_unhovered()
             pygame.display.update()
