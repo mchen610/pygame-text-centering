@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pygame-truly-centered-button
-Version: 2.11
+Version: 2.12
 Summary: A Pygame library of a button class with properly-centered text!
 Home-page: https://github.com/mchen610/pygame-truly-centered-button
 Author: Melvin Chen
@@ -54,7 +54,7 @@ Requires-Dist: scikit-learn
 ## Quickstart
 ### Shell
 ```
-pip install pygame-truly-centered-button
+pip install pygame-text-centering
 ```
 
 ### Python
@@ -62,7 +62,7 @@ pip install pygame-truly-centered-button
 #example.py
 
 import pygame
-from pgcenteredbutton import Button, BadButton, Text, TextButton
+from pgcentering import Button, BadButton, Text, TextButton
 
 if __name__ == "__main__":
     

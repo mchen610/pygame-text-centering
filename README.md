@@ -39,7 +39,7 @@
 ## Quickstart
 ### Shell
 ```
-pip install pygame-truly-centered-button
+pip install pygame-text-centering
 ```
 
 ### Python
@@ -47,7 +47,7 @@ pip install pygame-truly-centered-button
 #example.py
 
 import pygame
-from pgcenteredbutton import Button, BadButton, Text, TextButton
+from pgcentering import Button, BadButton, Text, TextButton
 
 if __name__ == "__main__":
     

@@ -1,1 +1,1 @@
-pgcenteredbutton
+pygamecentering

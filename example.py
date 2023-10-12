@@ -1,7 +1,7 @@
 #example.py
 
 import pygame
-from pgcenteredbutton import Button, BadButton, Text, TextButton
+from pygamecentering import Button, BadButton, Text, TextButton
 
 if __name__ == "__main__":
     
