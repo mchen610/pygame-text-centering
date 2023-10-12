@@ -135,10 +135,10 @@ class Button():
         pygame.draw.rect(self.screen, self.color, self.real_rect, self.thickness, self.radius)
 
     def __draw_hovered(self):
-        pygame.draw.rect(self.screen, pygame.colordict['azure'], self.real_rect, self.thickness + 3, self.radius)
+        pygame.draw.rect(self.screen, pygame.Color('azure'), self.real_rect, self.thickness + 3, self.radius)
 
     def __draw_brightened(self):
-        brighter_color = tuple([min(255, int(value*1.2)) for value in self.screen_color.normalize()[:3]])
+        brighter_color = tuple([min(255, value+50) for value in self.screen_color.normalize()[:3]])
         pygame.draw.rect(self.screen, brighter_color, self.real_rect, 0, self.radius)
         self.__draw_hovered()
         self.__draw_text()
@@ -178,7 +178,7 @@ class Button():
         self.__draw_border()
 
     def erase_button(self):
-        self.__draw_border(-self.thickness, self.screen_color)
+        pygame.draw.rect(self.screen, self.screen_color, self.real_rect, 0, self.radius)
 
     def is_hovered(self):
         return self.real_rect.collidepoint(pygame.mouse.get_pos())

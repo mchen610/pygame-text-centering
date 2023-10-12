@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pygame-text-centering',
-    version='0.10',
+    version='0.11',
     packages=find_packages(),
     install_requires=[
         'pygame', 'numpy', 'joblib', 'scipy', 'threadpoolctl', 'scikit-learn'
