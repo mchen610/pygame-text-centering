@@ -1,42 +1,7 @@
 ![Pygame](https://www.pygame.org/docs/_images/pygame_logo.png)
 
 # PYGAME WITH TRUE CENTERING
-**Sick and tired of Pygame's uncentered-centered text? Look no further!**
 
-`my_button = Button(params)`
-
-`my_text = Text(params)`
-
-`my_text_button = TextButton(params)`
-
-# Button
-## Required parameters
-- **screen**: `pygame.Surface`
-- **text**: `str`
-- **color**: `tuple` `(r, g, b)`
-- **center**: `tuple` `(x, y)`
-- **dim**: `tuple` `(w, h)`
-
-## Optional parameters
-- **thickness**: `int`
-- **radius**: `int`
-
-# Text & Text Button
-## Required parameters
-- **screen**: `pygame.Surface`
-- **text**: `str`
-- **color**: `tuple` `(r, g, b)`
-- **center**: `tuple` `(x, y)`
-- **font_size**: `int`
-
-# Button Attributes & Methods
-- **was_hovered**: Returns whether the button was hovered in the last render
-- **clicked**: Returns whether the button has been clicked
-- **draw()**: Draws the button (recommended to run immediately after instantiation)
-- **is_hovered()**: Checks if button is hovered (does not update visual state)
-- **is_clicked()**: Updates visual state of button and returns whether the button was just clicked
-
-## Quickstart
 ### Shell
 ```
 pip install pygame-text-centering
