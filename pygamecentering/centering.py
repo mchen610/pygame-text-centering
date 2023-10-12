@@ -158,7 +158,16 @@ class Button():
         
         self.__draw_hovered()
 
+    def __handle_hovered(self):
+        print('hi')
+        self.was_hovered = True
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+
+        self.__draw_hovered()
+
+
     def __handle_unhovered(self):
+        print(':()')
         self.was_hovered = False
         self.button_down = False
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
@@ -180,36 +189,27 @@ class Button():
         return self.real_rect.collidepoint(pygame.mouse.get_pos())
 
     def is_clicked(self):
+        while self.is_hovered():
+            if self.was_hovered is False:
+                self.__handle_hovered()
+                pygame.display.update()
 
-        if self.was_hovered is False and self.is_hovered() is True:
-            self.was_hovered = True
-            self.__draw_hovered()
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    self.__handle_click_down()
+                    pygame.display.update()
 
-        elif self.was_hovered is True and self.is_hovered() is False and self.button_down is False:
-            self.__handle_unhovered()
-
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered():
-                self.__handle_click_down()
-                    
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.button_down:
-                if self.is_hovered():
+                elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.button_down:
                     self.__handle_click_up()
                     pygame.display.update()
                     return True
-                else:
-                    self.__handle_unhovered()
-            
-            elif event.type == pygame.QUIT:
-                pygame.quit()
-                exit()            
 
-            else:
-                pygame.event.post(event)
+        if self.was_hovered:
+            self.__handle_unhovered()
+            pygame.display.update()
 
-        pygame.display.update()
         return False
+
     
     def move(self, center: tuple):
         self.real_rect.center = center
