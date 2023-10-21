@@ -1,8 +1,10 @@
 import pygame
-from pygamecentering.offset_linear_regression import params
+import json
 
 def adjust_font_rect(font_rect: pygame.rect.Rect, font_size: int):
-    font_rect.centery = round(font_rect.centery+font_size*params['coef']+params['intercept']) #adjust text to center
+    with open('pygamecentering/offset_data_results.json', 'r') as file:
+        params = json.load(file)['unadjusted_data']
+        font_rect.centery = round(font_rect.centery+font_size*params['coef']+params['intercept']) #adjust text to center
 
 class Text:
     def __init__(self, screen: pygame.Surface, text: str, color: tuple, center: tuple, font_size: int):
