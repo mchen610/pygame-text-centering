@@ -1,8 +1,12 @@
 import pygame
 import json
+import os
+
+package_dir = os.path.dirname(os.path.abspath(__file__))
+results_path = os.path.join(package_dir, 'offset_data_results.json')
 
 def adjust_font_rect(font_rect: pygame.rect.Rect, font_size: int):
-    with open('pygamecentering/offset_data_results.json', 'r') as file:
+    with open(results_path, 'r') as file:
         params = json.load(file)['unadjusted_data']
         font_rect.centery = round(font_rect.centery+font_size*params['coef']+params['intercept']) #adjust text to center
 

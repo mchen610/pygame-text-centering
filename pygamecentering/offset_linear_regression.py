@@ -1,12 +1,14 @@
 import sqlite3
 import os
 import json
-from importlib.resources import path
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
 import pygame
+
+package_dir = os.path.dirname(os.path.abspath(__file__))
+results_path = os.path.join(package_dir, 'offset_data_results.json')
 
 TABLE_BEFORE = "offset_data_before"
 TABLE_AFTER = "offset_data_after"
@@ -135,6 +137,6 @@ data['adjusted_data'] = generate_linear_regression(data['unadjusted_data'])
 offset_reduction = (data['unadjusted_data']['MAPE'] - data['adjusted_data']['MAPE']) / data['unadjusted_data']['MAPE']
 data['offset_reduction'] = f"{round(offset_reduction, 2)*100}%"
 
-with open('pygamecentering/offset_data_results.json', 'w') as file:
+with open(results_path, 'w') as file:
     json.dump(data, file, indent=4)
 
